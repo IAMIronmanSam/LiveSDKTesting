@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="ms-appx:///LiveSDKHTML//js/wl.js"></script>
+        <title>Testing Login</title>
+    </head>
+    <body>
+        <div id="signin"></div>
+        <div id="infoLabel"></div>
+        <button onclick='signInUser()'>Sign In</button>
+        <script>
+            WL.init({
+                client_id: "00000000440CE91C",
+                redirect_uri: "http://apple.com/",
+                scope: "wl.signin",
+                response_type: "token"
+            });
+            function signInUser() {
+                WL.login({
+                    scope: "wl.signin"
+                });
+            }
+            WL.Event.subscribe("auth.login", onLogin);
+
+            function onLogin() {
+                document.getElementById("infoLabel").innerText = "Signed in.";
+            }
+
+            WL.Event.subscribe("auth.sessionChange", onSessionChange);
+
+            function onSessionChange() {
+                var session = WL.getSession();
+                if (session) {
+                    document.getElementById("infoLabel").innerText =
+                        "Something about the session changed.";
+                }
+                else {
+                    document.getElementById("infoLabel").innerText =
+                        "Signed out or session error.";
+                }
+            }
+
+
+            //document.write("");
+
+
+        </script>
+    </body>
+</html>
